@@ -1,3 +1,4 @@
+
 import paho.mqtt.client as mqtt
 from google._upb._message import MessageMeta
 import json
@@ -16,9 +17,9 @@ class GolainClient:
                 self.client_id = client_id
                 self.root_topic = root_topic
                 self.host = settings['host']
-                self._SHADOW_TOPIC_R = f'/{root_topic}/{client_id}/device-shadow/r'
-                self._SHADOW_TOPIC_W = f'/{root_topic}/{client_id}/device-shadow/u'
-                self._DATA_TOPIC = f'{root_topic}/{client_id}/device-data/'
+                self._SHADOW_TOPIC_R = f'{root_topic}{client_id}/device-shadow/r'
+                self._SHADOW_TOPIC_W = f'{root_topic}{client_id}/device-shadow/u'
+                self._DATA_TOPIC = f'{root_topic}{client_id}/device-data/'
                 # convert the port to an integer
                 self.port = int(settings['port'])
         except FileNotFoundError:
@@ -72,7 +73,23 @@ class GolainClient:
             self.client.subscribe(self.root_topic + self.client_id + "/device-shadow/r", 1)
             # device ota
             self.client.subscribe(self.root_topic + self.client_id + "/device-ota/+", 1)
+            self.client.loop_start()
         except Exception as e:
             print(e)
             print("Connection failed!")
             exit(1)
+
+if __name__ == "__main__":
+    from shadow_pb2 import Shadow
+    from BatteryData_pb2 import battery
+    import random, time
+    client = GolainClient(Shadow)
+    client.connect()
+    client.Shadow.sshSetting = 1
+    client.updateShadow()
+    client.client.loop_start()
+    data = battery()
+    for i in range(100):
+        data.voltage = random.random()
+        client.publishData(data, "Battery Data")
+        time.sleep(100)
