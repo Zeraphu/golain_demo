@@ -1,0 +1,2 @@
+float32 ramperc
+float32 ramuse

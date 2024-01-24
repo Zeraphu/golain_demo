@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+enum SSH_ENABLE {
+	DISABLE = 0;
+	ENABLE = 1;
+}
+
+message Shadow {
+	SSH_ENABLE sshSetting = 1;
+	float battery = 2;
+	bool inUse = 3;
+}

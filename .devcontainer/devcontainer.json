@@ -1,0 +1,15 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
+{
+    "name": "Golain ROSCON Demo",
+    // "image": "arm64v8/ros:foxy",
+    "image": "osrf/ros:foxy-desktop",
+    "runArgs": [
+        "--cap-add=all",
+        "--security-opt=seccomp:unconfined",
+        "--security-opt=apparmor:unconfined",
+        "--ipc=host",
+        "--name=golain"
+    ],
+    "workspaceMount": "source=${localWorkspaceFolder},target=/ros2_ws/src,type=bind",
+    "workspaceFolder": "/ros2_ws"
+}

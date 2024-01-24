@@ -1,0 +1,23 @@
+syntax="proto3";
+
+enum battery_state{
+    UNKNOWN = 0;
+    CHARGING = 1;
+    DISCHARGING = 2;
+    CHARGED = 3;
+    DISCHARGED = 4;
+    OVERCHARGED = 5;
+    OVERDISCHARGED = 6;
+    OVERTEMPERATURE = 7;
+    OVERCURRENT = 8;
+    OVERVOLTAGE = 9;
+    UNDERVOLTAGE = 10;
+    UNDERTEMPERATURE = 11;
+    UNDERCURRENT = 12;
+    FAULT = 13;
+}
+
+message battery{
+    float voltage = 1;
+    battery_state state = 2;
+}
